@@ -8,7 +8,7 @@ const rute1 = '/home/laboratoria/Documents/LIM014-mdlinks/mdtest/readme.md';
 // const markdown = require('markdown-js');
 
 // const marked = require('marked');
-
+// hola
 // const jsdom = require('jsdom');
 
 function validatePath(rute) {
