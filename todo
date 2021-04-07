@@ -1,0 +1,16 @@
+// const rute1 = '/home/laboratoria/Documents/LIM014-mdlinks/mdtest/hola/hola.md';
+// almacenando la ruta
+
+// const markdown = require('markdown-js');
+
+// const marked = require('marked');
+// hola
+// const jsdom = require('jsdom');
+
+// convirtiendo y guardando la ruta en absoluta
+// console.log(rutaAbsoluta);
+
+// console.log(pathExist, 'rute1'); // etiqueta para ver de dónde vienen los console.log
+// file? verfificar si es directorio
+
+// console.log(rute, '30'); // rute // hacer una variable que almacene un arreglo vacío
