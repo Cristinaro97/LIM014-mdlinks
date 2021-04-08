@@ -7,6 +7,7 @@ const {
   extMD,
   readDir,
   readFile,
+  getLinks,
 } = require('./api.js');
 
 const regx = /\[([\w\s\d.()]+)\]\(((?:\/|https?:\/\/)[\w\d./?=#&_%~,.:-]+)\)/mg;
@@ -31,9 +32,12 @@ const mdLinks = (rute, option = { validate: false }) => {
       return readDirr;
     }
     if (extMD(rutaAbsoluta)) {
-      const listLink = readFile(rutaAbsoluta);
-      console.log(listLink);
-      return 'Soy archivo, soy file md.';
+      // getLinks([rutaAbsoluta]);
+      // validar si option es false, ejecuta getlinks con ruta absoluta (37), TAREA
+      // si es un true 'validar status https' TAREA
+      // Todos los métodos que usamos en getlinks (join, match, slice), TAREA
+      // hacer ejemplos de cómo funcionan en el rpelit TAREA
+      return getLinks([rutaAbsoluta]);
     }
   }
   return new Error('La ruta no existe');

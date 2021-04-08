@@ -1,6 +1,9 @@
 const path = require('path');
 const fs = require('fs');
 
+const regx = /\[([\w\s\d.()]+)\]\(((?:\/|https?:\/\/)[\w\d./?=#&_%~,.:-]+)\)/mg;
+const regxLink = /\(((?:\/|https?:\/\/)[\w\d./?=#&_%~,.:-]+)\)/mg;
+const regxText = /\[([\w\s\d.()]+)\]/g;
 function pathIsAbsolute(rute) {
   return path.isAbsolute(rute) === true ? rute : path.resolve(rute);
   // operador ternario condiciones ? expre1 :expre2
@@ -45,7 +48,26 @@ const joining = (x) => {
   });
   return someArrays;
 };
-
+const matchLinks = (file) => file.match(regx);
+const getLinks = (allMD) => {
+  const saveLinks = allMD.map((element) => {
+    const readLinks = readFile(element);
+    const matchRegex = matchLinks(readLinks);
+    const vacios = [];
+    matchRegex.forEach((elements) => {
+      const linkHrf = elements.match(regxLink).join().slice(1, -1);
+      const text = elements.match(regxText).join().slice(1, -1);
+      const file = elements;
+      vacios.push({
+        hrf: linkHrf,
+        text,
+        file,
+      });
+    });
+    return vacios;
+  });
+  return saveLinks;
+};
 /* const getMdLinks = (x) => {
     const linksArr = [];
     const dataDir = readDir(x);
@@ -80,4 +102,5 @@ module.exports = {
   readFile,
   readDir,
   extMD,
+  getLinks,
 };

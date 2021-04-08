@@ -1,19 +1,20 @@
 const {
-  validatePath,
+  pathIsAbsolute,
   validateIfPathExists,
   isDir,
   readDir,
-  readArchive,
-} = require('../index.js');
+  readFile,
+} = require('../api.js');
 
-describe('ValidatePath is a function?', () => {
-  it('should be a function', () => {
-    expect(typeof validatePath).toBe('function');
-  });
-});
 describe('Validateifpathexists is a function?', () => {
   it('should be a function', () => {
     expect(typeof validateIfPathExists).toBe('function');
+  });
+});
+
+describe('pathIsAbsolute is a function?', () => {
+  it('should be a function', () => {
+    expect(typeof pathIsAbsolute).toBe('function');
   });
 });
 
@@ -34,11 +35,11 @@ describe('readDir is a function', () => {
     expect(readDir('/home/laboratoria/Documents/LIM014-mdlinks/mdtest/hola')).toEqual(['/home/laboratoria/Documents/LIM014-mdlinks/mdtest/hola/hola.md', '/home/laboratoria/Documents/LIM014-mdlinks/mdtest/hola/hola2/hola2.md']);
   });
 });
-describe('readArchive is a function?', () => {
+describe('readFile is a function?', () => {
   it('should be a function', () => {
-    expect(typeof readArchive).toBe('function');
+    expect(typeof readFile).toBe('function');
   });
 });
 it('return one value', () => {
-  expect(readArchive('/home/laboratoria/Documents/LIM014-mdlinks/mdtest/hola/hola.md')).toEqual('Hola mundo');
+  expect(readFile('/home/laboratoria/Documents/LIM014-mdlinks/mdtest/hola/hola.md')).toEqual('Hola mundo');
 });
