@@ -27,7 +27,7 @@ const mdLinks = (rute, option = { validate: false }) => {
       const listLink = [];
       readDirr.forEach((element) => {
         const readFiles = readFile(element); // leyendo el contenido de los archivos md
-        console.log(readFiles);
+        // console.log(readFiles);
       });
       return readDirr;
     }
@@ -42,7 +42,7 @@ const mdLinks = (rute, option = { validate: false }) => {
   }
   return new Error('La ruta no existe');
 };
-console.log(mdLinks(rute2));
+// console.log(mdLinks(rute2)); // arrays
 
 /* const resultFile = file.isDirectory(rute);
   return resultFile; */

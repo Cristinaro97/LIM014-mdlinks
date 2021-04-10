@@ -66,8 +66,58 @@ const getLinks = (allMD) => {
     });
     return vacios;
   });
-  return saveLinks;
+  return saveLinks.flat();
 };
+
+// Validando links (1)
+const axios = require('axios');
+
+const validate = ({ hrf, text, file }) => axios.get(hrf)
+  .then((resp) => {
+    const { status } = resp;
+    const textStatus = resp.statusText;
+    return {
+    // console.log(status.status);
+      hrf, text, file, status, textStatus,
+    };
+  })
+  .catch((resp) => {
+    const { status } = resp;
+    return {
+    // console.log(status.status);
+      hrf, text, file, status,
+    };
+  });
+
+/* const validate = (arrays) => {
+  arrays.forEach((element) => {
+    const links = element.hrf;
+    axios.get(links).then((resp) => {
+      const status = resp;
+      const object = {
+        hrf: element.hrf,
+        text: element.text,
+        file: element.file,
+        status,
+      };
+      return object;
+      // console.log(resp.status);
+    });
+  });
+}; */
+validate({
+  hrf: 'http://www.adc-logix.com/',
+  text: 'Leer un archivo',
+  file: '[Leer un archivo](https://nodejs.org/api/fs.html#fs_fs_readfile_path_options_callback)',
+}).then((result) => {
+  console.log('Response', result);
+})
+  .catch((result) => {
+    console.log('Response', result);
+  });
+// console.log(validate(extraObj));
+
+// console.log(extraObj.join());
 /* const getMdLinks = (x) => {
     const linksArr = [];
     const dataDir = readDir(x);
