@@ -77,18 +77,21 @@ const validate = ({ hrf, text, file }) => axios.get(hrf)
     const { status } = resp;
     const textStatus = resp.statusText;
     return {
-    // console.log(status.status);
       hrf, text, file, status, textStatus,
     };
   })
   .catch((resp) => {
-    const { status } = resp;
+    let status;
+    let textStatus;
+    if (resp.response) {
+      status = resp.response.status;
+      textStatus = resp.response.statusText;
+    }
     return {
-    // console.log(status.status);
-      hrf, text, file, status,
+      // console.log(status.status);
+      hrf, text, file, status, textStatus,
     };
   });
-
 /* const validate = (arrays) => {
   arrays.forEach((element) => {
     const links = element.hrf;
@@ -106,7 +109,7 @@ const validate = ({ hrf, text, file }) => axios.get(hrf)
   });
 }; */
 validate({
-  hrf: 'http://www.adc-logix.com/',
+  hrf: 'https://httpstat.us/404',
   text: 'Leer un archivo',
   file: '[Leer un archivo](https://nodejs.org/api/fs.html#fs_fs_readfile_path_options_callback)',
 }).then((result) => {
