@@ -18,19 +18,19 @@ function validateIfPathExists(rute) { // preguntar si la ruta existe
 // Identificar si la  ruta es File o Directorio
 const isDir = (rute) => fs.statSync(rute).isDirectory();
 
-// Identificar la extensión del archivo
+// Identificar la extensión del archivo, pero devuelve en string la extensión del archivo 'md, html'
 const extMD = (rute) => path.extname(rute);
 
 // Identificar la extensión del archivo
 const readDir = (rute) => {
   let allMD = [];
   const dataDir = fs.readdirSync(rute);
-  dataDir.forEach((files) => {
+  dataDir.forEach((files) => { // Evalúa por carpeta
     const filePath = path.join(rute, files);
     if (extMD(filePath) === '.md') {
       allMD.push(filePath);
     } else if (isDir(filePath) === true) {
-      allMD = allMD.concat(readDir(filePath));
+      allMD = allMD.concat(readDir(filePath)); // reasignando a concatenar
     }
   });
   return allMD;
@@ -39,25 +39,21 @@ const readDir = (rute) => {
 // Leyendo el archivo
 const readFile = (rute) => fs.readFileSync(rute, 'utf-8');
 
-const joining = (x) => {
-  const saveValue = readDir(x);
-  const someArrays = [];
-  saveValue.forEach((element) => {
-    const read = readFile(element);
-    someArrays.push(read);
-  });
-  return someArrays;
-};
-const matchLinks = (file) => file.match(regx);
+const matchLinks = (file) => file.match(regx); // Ingresa al contenido que está en el archivo;
+// md y es un string, luego el resultado es un array de caracteres, corchetes y paréntesis
+// console.log(matchLinks(readFile('/home/laboratoria/Documents/
+// LIM014-mdlinks/mdtest/hola/hola.md')));
+
 const getLinks = (allMD) => {
   const saveLinks = allMD.map((element) => {
     const readLinks = readFile(element);
     const matchRegex = matchLinks(readLinks);
+    // console.log(matchRegex);
     const vacios = [];
     matchRegex.forEach((elements) => {
       const linkHrf = elements.match(regxLink).join().slice(1, -1);
       const text = elements.match(regxText).join().slice(1, -1);
-      const file = elements;
+      const file = element;
       vacios.push({
         hrf: linkHrf,
         text,
@@ -69,6 +65,7 @@ const getLinks = (allMD) => {
   return saveLinks.flat();
 };
 
+// console.log(getLinks(['/home/laboratoria/Documents/LIM014-mdlinks/mdtest/hola/hola.md']));
 // Validando links (1)
 const axios = require('axios');
 
@@ -77,80 +74,49 @@ const validate = ({ hrf, text, file }) => axios.get(hrf)
     const { status } = resp;
     const textStatus = resp.statusText;
     return {
-    // console.log(status.status);
       hrf, text, file, status, textStatus,
     };
   })
-  .catch((resp) => {
-    const { status } = resp;
+  .catch((error) => {
+    let status;
+    let textStatus;
+    if (error.response) {
+      status = error.response.status;
+      textStatus = 'FAIL';
+    } else {
+      status = 'Not status';
+      textStatus = 'FAIL';
+    }
     return {
-    // console.log(status.status);
-      hrf, text, file, status,
+      hrf, text, file, status, textStatus,
     };
   });
-
-/* const validate = (arrays) => {
-  arrays.forEach((element) => {
-    const links = element.hrf;
-    axios.get(links).then((resp) => {
-      const status = resp;
-      const object = {
-        hrf: element.hrf,
-        text: element.text,
-        file: element.file,
-        status,
-      };
-      return object;
-      // console.log(resp.status);
+const linksValidate = (allMD) => {
+  const saveLinks = allMD.map((element) => {
+    const readLinks = readFile(element);
+    const matchRegex = matchLinks(readLinks);
+    const vacios = [];
+    matchRegex.forEach((elements) => {
+      const hrf = elements.match(regxLink).join().slice(1, -1);
+      const text = elements.match(regxText).join().slice(1, -1);
+      const file = element;
+      const linksObject = validate({ hrf, text, file });
+      vacios.push(linksObject);
     });
+    return Promise.all(vacios);
   });
-}; */
-validate({
-  hrf: 'http://www.adc-logix.com/',
-  text: 'Leer un archivo',
-  file: '[Leer un archivo](https://nodejs.org/api/fs.html#fs_fs_readfile_path_options_callback)',
-}).then((result) => {
-  console.log('Response', result);
-})
-  .catch((result) => {
-    console.log('Response', result);
-  });
-// console.log(validate(extraObj));
-
-// console.log(extraObj.join());
-/* const getMdLinks = (x) => {
-    const linksArr = [];
-    const dataDir = readDir(x);
-    //aquí empieza el otro código para recorrer los arrays
-    dataDir.forEach((myfile) => {
-    const fileRead = fs.readFileSync(myfile, 'utf-8');
-    const links = fileRead.match(regx);
-    if (links) {
-      links.forEach((link) => {
-        const myhref = link.match(regxLink).join().slice(1, -1);
-        const mytext = link.match(regxText).join().slice(1, -1);
-        const linksObj = {
-          href: myhref,
-          text: mytext,
-          file: myfile,
-        };
-
-        linksArr.push(linksObj);
-      });
-    }
-  });
-  return linksArr;
+  return saveLinks;
 };
-
-console.log(getMdLinks(rute1)); */
 
 module.exports = {
   pathIsAbsolute,
   validateIfPathExists,
   isDir,
-  joining,
   readFile,
   readDir,
   extMD,
   getLinks,
+  validate,
+  linksValidate,
+  matchLinks,
 };

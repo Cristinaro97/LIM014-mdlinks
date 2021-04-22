@@ -1,27 +1,42 @@
-const path = require('path');
-const fs = require('fs');
 const {
   pathIsAbsolute,
   validateIfPathExists,
   isDir,
-  extMD,
   readDir,
-  readFile,
   getLinks,
+  linksValidate,
+  extMD,
 } = require('./api.js');
 
-const regx = /\[([\w\s\d.()]+)\]\(((?:\/|https?:\/\/)[\w\d./?=#&_%~,.:-]+)\)/mg;
-const regxLink = /\(((?:\/|https?:\/\/)[\w\d./?=#&_%~,.:-]+)\)/mg;
-const regxText = /\[([\w\s\d.()]+)\]/g;
-const rute1 = '/home/laboratoria/Documents/LIM014-mdlinks/mdtest';
-const rute2 = 'README.md';
-const rute3 = 'readme.mds';
-const mdLinks = (rute, option = { validate: false }) => {
+// const rute1 = '/home/laboratoria/Documents/LIM014-mdlinks/mdtest';
+const rute2 = '/home/laboratoria/Documents/LIM014-mdlinks/README.md';
+// const rute3 = 'readme.mds';
+const mdLinks = (rute, option = { validate: false }) => new Promise((resolve, reject) => {
   const rutaAbsoluta = pathIsAbsolute(rute);
+  const error = 'ERROR';
   const validatePath = validateIfPathExists(rutaAbsoluta);
   if (validatePath === true) {
-    const isDirr = isDir(rutaAbsoluta);
-    if (isDirr === true) {
+    if (isDir(rutaAbsoluta) === true) {
+      const dataMd = readDir(rutaAbsoluta);
+      if (option.validate === false) {
+        resolve(getLinks(dataMd));
+      } else {
+        const links = Promise.all(linksValidate(dataMd));// validamos si el link es válido
+        resolve(links).flat();
+      }
+    } else if (extMD(rutaAbsoluta) === '.md') {
+      if (option.validate === false) {
+        const saveLinks = getLinks([rutaAbsoluta]);
+        resolve(saveLinks);
+      } else {
+        const links = Promise.all(linksValidate([rutaAbsoluta]));
+        resolve(links);
+      }
+    }
+  } reject(error);
+});
+
+/* if (isDirr === true) {
       const readDirr = readDir(rutaAbsoluta);
       // leyendo el directorio y sacando los file en un array
       const listLink = [];
@@ -33,20 +48,14 @@ const mdLinks = (rute, option = { validate: false }) => {
     }
     if (extMD(rutaAbsoluta)) {
       // getLinks([rutaAbsoluta]);
-      // validar si option es false, ejecuta getlinks con ruta absoluta (37), TAREA
-      // si es un true 'validar status https' TAREA
-      // Todos los métodos que usamos en getlinks (join, match, slice), TAREA
-      // hacer ejemplos de cómo funcionan en el rpelit TAREA
-      return getLinks([rutaAbsoluta]);
+      const getLinks2 = getLinks([rutaAbsoluta]);
+      return validate(getLinks2).then((resp) => resp);
     }
   }
   return new Error('La ruta no existe');
+}; */
+// mdLinks(rute2, { validate: true }).then((resp) => console.log(resp));
+
+module.exports = {
+  mdLinks,
 };
-// console.log(mdLinks(rute2)); // arrays
-
-/* const resultFile = file.isDirectory(rute);
-  return resultFile; */
-
-/* const isItDirectory = fs.statSync(rute);
-  console.log('is directory ? ' + isItDirectory.isDirectory()); */
-// Contiene links?
