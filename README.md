@@ -1,5 +1,21 @@
 # Markdown Links
 
+1. Descripción
+MDLINKS es una librería que lee y analiza los links que contienen los archivos con extensión md, para verificar sus estados, generando un resultado de estadítica y detalle de cada link.
+
+2. Instalación
+Podemos instalar la librería de la siguiente forma: npm install md-links-cristina-rodriguez
+
+3. Modo de uso
+Puedes ingresar tus datos con la siguiente sintaxis:
+
+    mdLinks 
+    mdLinks path 
+    mdLinks path --validate
+    mdLinks path --stats
+    mdlinks path --stats --validate
+
+
 ## Índice
 
 * [1. Preámbulo](#1-preámbulo)
