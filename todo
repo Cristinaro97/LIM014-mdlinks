@@ -1,0 +1,87 @@
+// const rute1 = '/home/laboratoria/Documents/LIM014-mdlinks/mdtest/hola/hola.md';
+// almacenando la ruta
+
+// const markdown = require('markdown-js');
+
+// const marked = require('marked');
+// hola
+// const jsdom = require('jsdom');
+
+// convirtiendo y guardando la ruta en absoluta
+// console.log(rutaAbsoluta);
+
+// console.log(pathExist, 'rute1'); // etiqueta para ver de dónde vienen los console.log
+// file? verfificar si es directorio
+
+// console.log(rute, '30'); // rute // hacer una variable que almacene un arreglo vacío
+
+// console.log(extraObj.join());
+const getMdLinks = (x) => {
+  const linksArr = [];
+  const dataDir = readDir(x);
+  dataDir.forEach((myfile) => {
+    const fileRead = fs.readFileSync(myfile, 'utf-8');
+    const links = fileRead.match(regx);
+    if (links) {
+      links.forEach((link) => {
+        const myhref = link.match(regxLink).join().slice(1, -1);
+        const mytext = link.match(regxText).join().slice(1, -1);
+        const linksObj = {
+          href: myhref,
+          text: mytext,
+          file: myfile,
+        };
+
+        linksArr.push(linksObj);
+      });
+    }
+  });
+  return linksArr;
+};
+/* const joining = (x) => {
+  const saveValue = readDir(x);
+  const someArrays = [];
+  saveValue.forEach((element) => {
+    const read = readFile(element);
+    someArrays.push(read);
+  });
+  return someArrays; 
+}; */ Chio me dijo que lo borre 
+
+
+CLI CRIS
+if (newAbsolutePath && !argumentsMd[3]) {
+  mdLinks(newAbsolutePath).then((response) => response.forEach((element) => {
+    console.log(newAbsolutePath, element.href, element.text);
+  }));
+} else if (newAbsolutePath && argumentsMd.includes('--validate') && !argumentsMd[4]) {
+  mdLinks(newAbsolutePath, { validate: true }).then((response) => response.forEach((element) => {
+    console.log(newAbsolutePath, element.href, element.text, element.Status, element.StatusMessage);
+  }));
+} else if (newAbsolutePath && argumentsMd.includes('--stats') && !argumentsMd[4]) {
+  mdLinks(newAbsolutePath, { validate: true }).then((response) => {
+    const gettingLinks = response.map((element) => (element.href));
+    // console.log(gettingLinks, gettingLinks.length);
+    const preUnique = new Set(gettingLinks); // returns object
+    const unique = [...preUnique]; // parametro rest
+    console.log(`total: ${gettingLinks.length}\nunique: ${unique.length}`);
+  });
+} else if (newAbsolutePath && argumentsMd.includes('--validate') && argumentsMd.includes('--stats') && !argumentsMd[5]) {
+  mdLinks(newAbsolutePath, { validate: true }).then((response) => {
+    const gettingLinks = response.map((element) => (element.href));
+    const preBroken = response.map((element) => (element.Status));
+    const arrayBroken = preBroken.map((element) => {
+      if (element === 200) {
+        return 0;
+      }
+      return 1;
+    });
+    const reduceBroken = (accumulator, currentValue) => accumulator + currentValue;
+    const broken = arrayBroken.reduce(reduceBroken);
+    console.log(broken);
+    // console.log(gettingLinks, gettingLinks.length);
+    const preUnique = new Set(gettingLinks); // returns object
+    const unique = [...preUnique]; // parametro rest
+    console.log(`total: ${gettingLinks.length}\nunique: ${unique.length}\nbroken: ${broken}`);
+  });
+}

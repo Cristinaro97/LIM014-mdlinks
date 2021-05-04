@@ -1,4 +1,52 @@
 {
   "name": "md-links",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "description": "## Índice",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "eslint": "eslint --ext .js test/",
+    "pretest": "npm run eslint",
+    "test": "jest --verbose --coverage",
+    "start": "nodemon ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cristinaro97/LIM014-mdlinks.git"
+  },
+  "keywords": [
+    "markdown",
+    "javascript",
+    "mdlinks",
+    "github"
+  ],
+  "author": "Cristina Rodriguez Laureano <cristinagrl@hotmail.com>",
+  "bin": {
+    "mdlinks": "./cli.js"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Cristinaro97/LIM014-mdlinks/issues"
+  },
+  "homepage": "https://github.com/Cristinaro97/LIM014-mdlinks#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bin": "^0.0.0",
+    "i": "^0.3.6",
+    "jest": "^26.6.3",
+    "jsdom": "^16.5.2",
+    "markdown": "^0.5.0",
+    "markdown-js": "^0.0.4",
+    "marked": "^2.0.1",
+    "moment": "^2.29.1",
+    "nodemon": "^2.0.7",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1"
+  }
 }
