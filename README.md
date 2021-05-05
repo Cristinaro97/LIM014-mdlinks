@@ -10,15 +10,15 @@ Podemos instalar la librería de la siguiente forma: npm install md-links-cristi
 Puedes ingresar tus datos con la siguiente sintaxis:
 
     mdLinks 
-    [Imagen1]https://github.com/Cristinaro97/LIM014-mdlinks/blob/Cristina2/img/mdlinks.jpg
+    [Imagen1](https://github.com/Cristinaro97/LIM014-mdlinks/blob/Cristina2/img/mdlinks.jpg)
     mdLinks path
-    [Imagen2]https://github.com/Cristinaro97/LIM014-mdlinks/blob/Cristina2/img/mdlinkspath.jpg 
+    [Imagen2](https://github.com/Cristinaro97/LIM014-mdlinks/blob/Cristina2/img/mdlinkspath.jpg)
     mdLinks path --validate
-    [Imagen3]https://github.com/Cristinaro97/LIM014-mdlinks/blob/Cristina2/img/mdlinksvalidate.jpg
+    [Imagen3](https://github.com/Cristinaro97/LIM014-mdlinks/blob/Cristina2/img/mdlinksvalidate.jpg)
     mdLinks path --stats
-    [Imagen4]https://github.com/Cristinaro97/LIM014-mdlinks/blob/Cristina2/img/mdlinksstas.jpg
+    [Imagen4](https://github.com/Cristinaro97/LIM014-mdlinks/blob/Cristina2/img/mdlinksstas.jpg)
     mdlinks path --stats --validate
-    [Imagen5]https://github.com/Cristinaro97/LIM014-mdlinks/blob/Cristina2/img/mdlinksvalidatestats.jpg
+    [Imagen5](https://github.com/Cristinaro97/LIM014-mdlinks/blob/Cristina2/img/mdlinksvalidatestats.jpg)
 
 
 
