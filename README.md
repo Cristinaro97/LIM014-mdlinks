@@ -9,7 +9,8 @@ Podemos instalar la librería de la siguiente forma: npm install md-links-cristi
 3. Modo de uso
 Puedes ingresar tus datos con la siguiente sintaxis:
 
-    mdLinks 
+    mdLinks
+    
     ![Imagen1](https://github.com/Cristinaro97/LIM014-mdlinks/blob/Cristina2/img/mdlinks.jpg)
     mdLinks path
     ![Imagen2](https://github.com/Cristinaro97/LIM014-mdlinks/blob/Cristina2/img/mdlinkspath.jpg)
