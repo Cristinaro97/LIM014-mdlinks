@@ -4,7 +4,8 @@
 MDLINKS es una librería que lee y analiza los links que contienen los archivos con extensión md, para verificar sus estados, generando un resultado de estadítica y detalle de cada link.
 
 
-## 2. Instalación ⚙️ - Instalación con NPM ``` npm install md-links-cristina-rodriguez ``` 
+## 2. Instalación ⚙️ - Instalación con NPM 
+``` npm install md-links-cristina-rodriguez ``` 
 
 
 3. Modo de uso
